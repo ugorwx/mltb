@@ -129,9 +129,9 @@ def get_readable_message(sid, is_user, page_no=1, status="All"):
     ):
         tstatus = task.status()
         if task.listener.isSuperChat:
-            msg += f"<b>{index+start_position}.<a href='{task.listener.message.link}'>{tstatus}</a>: </b>"
+            msg += f"<b>{index+start_position}. <a href='{task.listener.message.link}'>{tstatus}</a>: </b>"
         else:
-            msg += f"<b>{index+start_position}.{tstatus}: </b>"
+            msg += f"<b>{index+start_position}. {tstatus}: </b>"
         msg += f"<code>{escape(f'{task.name()}')}</code>"
         if tstatus not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
             msg += f"\n{get_progress_bar_string(task.progress())} {task.progress()}"
@@ -158,20 +158,20 @@ def get_readable_message(sid, is_user, page_no=1, status="All"):
         msg = f"No Active {status} Tasks!\n\n"
     buttons = ButtonMaker()
     if not is_user:
-        buttons.ibutton("📜", "status 0 ov", position="header")
+        buttons.ibutton("📜", "status 0 ov", position="footer")
     if len(tasks) > STATUS_LIMIT:
         msg += f"<b>Page:</b> {page_no}/{pages} | <b>Tasks:</b> {tasks_no}\n"
-        buttons.ibutton("<<", f"status {sid} pre", position="header")
-        buttons.ibutton(">>", f"status {sid} nex", position="header")
-        if tasks_no > 20:
-            for i in [1, 2, 4, 6, 8, 10, 15, 20]:
-                buttons.ibutton(i, f"status {sid} ps {i}", position="footer")
+        buttons.ibutton("⬅", f"status {sid} pre", position="footer")
+        buttons.ibutton("➡", f"status {sid} nex", position="footer")
+        if tasks_no > 15:
+            for i in [2, 3, 4, 5]:
+                buttons.ibutton(i, f"status {sid} ps {i}", position="header")
+    buttons.ibutton("♻", f"status {sid} ref", position="footer")
     if len(task_dict) > STATUS_LIMIT or status != "All":
         for label, status_value in STATUS_VALUES:
             if status_value != status:
                 buttons.ibutton(label, f"status {sid} st {status_value}")
-    buttons.ibutton("♻️", f"status {sid} ref", position="header")
-    button = buttons.build_menu(8)
+    button = buttons.build_menu(4)
     msg += f"<b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
     msg += f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - botStartTime)}"
     return msg, button

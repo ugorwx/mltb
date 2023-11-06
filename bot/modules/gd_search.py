@@ -26,7 +26,7 @@ async def list_buttons(user_id, isRecursive=True, user_token=False):
         f"list_types {user_id} ut {isRecursive} {user_token}",
     )
     buttons.ibutton("Cancel", f"list_types {user_id} cancel")
-    return buttons.build_menu(2)
+    return buttons.build_menu(1)
 
 
 async def _list_drive(key, message, item_type, isRecursive, user_token, user_id):

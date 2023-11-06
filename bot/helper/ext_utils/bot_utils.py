@@ -59,23 +59,23 @@ def bt_selection_buttons(id_):
 async def initiate_help_messages():
     mirror, yt, clone = await gather(
         telegraph.create_page(
-            title="Mirror-Leech-Bot Drive Search", content=MIRROR_HELP_MESSAGE
+            title="DeltaMLTBot Guide", content=MIRROR_HELP_MESSAGE
         ),
         telegraph.create_page(
-            title="Mirror-Leech-Bot Drive Search", content=YT_HELP_MESSAGE
+            title="DeltaMLTBot Guide", content=YT_HELP_MESSAGE
         ),
         telegraph.create_page(
-            title="Mirror-Leech-Bot Drive Search", content=CLONE_HELP_MESSAGE
+            title="DeltaMLTBot Guide", content=CLONE_HELP_MESSAGE
         ),
     )
     buttons = ButtonMaker()
-    buttons.ubutton("Usage Guide", f"https://telegra.ph/{mirror['path']}")
+    buttons.ubutton("📑 Usage Guide", f"https://telegra.ph/{mirror['path']}")
     COMMAND_USAGE["main"] = buttons.build_menu(1)
     buttons.reset()
-    buttons.ubutton("Usage Guide", f"https://telegra.ph/{yt['path']}")
+    buttons.ubutton("📑 Usage Guide", f"https://telegra.ph/{yt['path']}")
     COMMAND_USAGE["yt"] = buttons.build_menu(1)
     buttons.reset()
-    buttons.ubutton("Usage Guide", f"https://telegra.ph/{clone['path']}")
+    buttons.ubutton("📑 Usage Guide", f"https://telegra.ph/{clone['path']}")
     COMMAND_USAGE["clone"] = buttons.build_menu(1)
 
 
@@ -83,7 +83,7 @@ async def get_telegraph_list(telegraph_content):
     path = [
         (
             await telegraph.create_page(
-                title="Mirror-Leech-Bot Drive Search", content=content
+                title="DeltaMLTBot GDrive Search", content=content
             )
         )["path"]
         for content in telegraph_content
@@ -91,7 +91,7 @@ async def get_telegraph_list(telegraph_content):
     if len(path) > 1:
         await telegraph.edit_telegraph(path, telegraph_content)
     buttons = ButtonMaker()
-    buttons.ubutton("🔎 VIEW", f"https://telegra.ph/{path[0]}")
+    buttons.ubutton("👀 View Result", f"https://telegra.ph/{path[0]}")
     return buttons.build_menu(1)
 
 

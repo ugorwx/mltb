@@ -135,7 +135,7 @@ async def add_mega_download(listener, path):
     MEGA_PASSWORD = config_dict["MEGA_PASSWORD"]
 
     executor = AsyncExecutor()
-    api = MegaApi(None, None, None, "mirror-leech-telegram-bot")
+    api = MegaApi(None, None, None, "DeltaMLTBot")
     folder_api = None
 
     mega_listener = MegaAppListener(executor.continue_event, listener)
@@ -149,7 +149,7 @@ async def add_mega_download(listener, path):
         node = mega_listener.public_node
         mega_listener.isFile = True
     else:
-        folder_api = MegaApi(None, None, None, "mirror-leech-telegram-bot")
+        folder_api = MegaApi(None, None, None, "DeltaMLTBot")
         folder_api.addListener(mega_listener)
         await executor.do(folder_api.loginToFolder, (listener.link,))
         node = await sync_to_async(folder_api.authorizeNode, mega_listener.node)
