@@ -164,7 +164,7 @@ def get_readable_message(sid, is_user, page_no=1, status="All"):
         buttons.ibutton("⬅", f"status {sid} pre", position="footer")
         buttons.ibutton("➡", f"status {sid} nex", position="footer")
         if tasks_no > 15:
-            for i in [2, 3, 4, 5]:
+            for i in [1, 2, 3, 4]:
                 buttons.ibutton(i, f"status {sid} ps {i}", position="header")
     buttons.ibutton("♻", f"status {sid} ref", position="footer")
     if len(task_dict) > STATUS_LIMIT or status != "All":
