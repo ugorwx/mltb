@@ -302,7 +302,7 @@ class TaskListener(TaskConfig):
                         buttons.ubutton("⚡ Index", share_url)
                         if mime_type.startswith(("image", "video", "audio")):
                             share_urls = f"{INDEX_URL}findpath?id={dir_id}&view=true"
-                            buttons.ubutton("🌐 View", share_urls)
+                            buttons.ubutton("🌐 View Media", share_urls)
                 button = buttons.build_menu(2)
             else:
                 msg += f"\n\nPath: <code>{rclonePath}</code>"
