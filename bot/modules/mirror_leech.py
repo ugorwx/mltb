@@ -36,7 +36,7 @@ from bot.helper.mirror_utils.download_utils.telegram_download import (
 )
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.filters import CustomFilters
-from bot.helper.telegram_helper.message_utils import sendMessage, get_tg_link_message
+from bot.helper.telegram_helper.message_utils import sendMessage, get_tg_link_message, link_parser
 from bot.helper.listeners.task_listener import TaskListener
 
 
@@ -219,7 +219,7 @@ class Mirror(TaskListener):
 
             if file_ is None:
                 if reply_text := reply_to.text:
-                    self.link = reply_text.split("\n", 1)[0].strip()
+                    self.link = await link_parser(reply_to)
                 else:
                     reply_to = None
             elif reply_to.document and (

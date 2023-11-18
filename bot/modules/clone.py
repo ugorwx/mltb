@@ -11,6 +11,7 @@ from bot.helper.telegram_helper.message_utils import (
     sendMessage,
     deleteMessage,
     sendStatusMessage,
+    link_parser,
 )
 from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
@@ -99,7 +100,7 @@ class Clone(TaskListener):
         await self.getTag(text)
 
         if not self.link and (reply_to := self.message.reply_to_message):
-            self.link = reply_to.text.split("\n", 1)[0].strip()
+            self.link = await link_parser(reply_to)
 
         LOGGER.info(self.link)
 
