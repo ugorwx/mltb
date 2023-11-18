@@ -1,12 +1,42 @@
+import re
+
+from typing import List, Union
+
 from asyncio import sleep
+from pyrogram.enums import MessageEntityType
 from pyrogram.errors import FloodWait
 from time import time
-from re import match as re_match
+
 
 from bot import config_dict, LOGGER, status_dict, task_dict_lock, Interval, bot, user
 from bot.helper.ext_utils.bot_utils import setInterval, sync_to_async
 from bot.helper.ext_utils.status_utils import get_readable_message
 from bot.helper.ext_utils.exceptions import TgLinkException
+
+
+async def link_parser(
+    message: Message, parse_list: bool = False
+) -> Union[str, List[str]]:
+    # Regular expression pattern to match magnet links
+    magnet_pattern: str = r"magnet:\?[^\s]+"
+
+    # Find all magnet links in the text
+    magnet_links: list[str] = re.findall(magnet_pattern, message.text)
+
+    if magnet_links:
+        return magnet_links if parse_list else magnet_links[0]
+
+    links_list: List[str] = []
+
+    for entity in message.entities or []:
+        if entity.type in (MessageEntityType.URL, MessageEntityType.TEXT_LINK):
+            link: str = message.text[entity.offset : entity.offset + entity.length]
+            links_list.append(link)
+
+    if parse_list:
+        return links_list
+    else:
+        return links_list[0] if links_list else ""
 
 
 async def sendMessage(message, text, buttons=None, block=True):
@@ -115,12 +145,12 @@ async def get_tg_link_message(link):
     links = []
     if link.startswith("https://t.me/"):
         private = False
-        msg = re_match(
+        msg = re.match(
             r"https:\/\/t\.me\/(?:c\/)?([^\/]+)(?:\/[^\/]+)?\/([0-9-]+)", link
         )
     else:
         private = True
-        msg = re_match(
+        msg = re.match(
             r"tg:\/\/openmessage\?user_id=([0-9]+)&message_id=([0-9-]+)", link
         )
         if not user:

@@ -11,6 +11,7 @@ from bot.helper.telegram_helper.message_utils import (
     sendMessage,
     editMessage,
     deleteMessage,
+    link_parser,
 )
 from bot.helper.telegram_helper.button_build import ButtonMaker
 from bot.helper.ext_utils.bot_utils import (
@@ -364,7 +365,7 @@ class YtDlp(TaskListener):
         opt = opt or self.user_dict.get("yt_opt") or config_dict["YT_DLP_OPTIONS"]
 
         if not self.link and (reply_to := self.message.reply_to_message):
-            self.link = reply_to.text.split("\n", 1)[0].strip()
+            self.link = await link_parser(reply_to)
 
         if not is_url(self.link):
             await sendMessage(
