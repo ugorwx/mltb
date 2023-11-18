@@ -3,7 +3,7 @@ from aiofiles.os import remove
 from ..telegram_helper.message_utils import link_parser
 
 
-def filterLinks(links_list: list, bulk_start: int, bulk_end: int) -> list:
+async def filterLinks(links_list: list, bulk_start: int, bulk_end: int) -> list:
     links_list = await link_parser(message, parse_list=True)
 
     if bulk_start != 0 and bulk_end != 0:
