@@ -39,12 +39,12 @@ def create_help_buttons():
     for name in list(MIRROR_HELP_DICT.keys())[1:]:
         buttons.ibutton(name, f"help m {name}")
     buttons.ibutton("Close", f"help close")
-    COMMAND_USAGE["mirror"] = [MIRROR_HELP_DICT["main"], buttons.build_menu(3)]
+    COMMAND_USAGE["mirror"] = [MIRROR_HELP_DICT["main"], buttons.build_menu(2)]
     buttons.reset()
     for name in list(YT_HELP_DICT.keys())[1:]:
         buttons.ibutton(name, f"help yt {name}")
     buttons.ibutton("Close", f"help close")
-    COMMAND_USAGE["yt"] = [YT_HELP_DICT["main"], buttons.build_menu(3)]
+    COMMAND_USAGE["yt"] = [YT_HELP_DICT["main"], buttons.build_menu(2)]
 
 
 def bt_selection_buttons(id_):
